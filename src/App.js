@@ -70,6 +70,7 @@
 
 
 // App.js
+import { createBrowserRouter,RouterProvider } from 'react-router-dom';
 import React, { useState,useContext } from 'react';
 import CartModal from './components/UI/CartModal';
 import './App.css';
@@ -77,6 +78,15 @@ import Resource from './components/Resource';
 import CartProvider from './store/CartProvider';
 import CartButton from './components/Cart/CartButton'; // Import the CartButton component
 import CartContext from './store/CartContext';
+import About from './AboutPage/About';
+
+
+
+
+const router=createBrowserRouter([
+  {path:'/aboutUs',element:<About />}
+])
+
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -90,6 +100,7 @@ function App() {
   };
 
   return (
+    <RouterProvider router={router}>
     <CartProvider>
       <div className='align-right'>
         <CartButton onClick={toggleCart} /> {/* Use the CartButton component */}
@@ -102,6 +113,7 @@ function App() {
       )}
       <Resource isCartOpen={isCartOpen}/>
     </CartProvider>
+    </RouterProvider>
   );
 }
 
