@@ -1,7 +1,7 @@
 
-import React from 'react';
+import React ,{useContext,useState} from 'react';
 import classes from './Resouece.module.css'
-
+import CartContext from '../store/CartContext';
 const productsArr = [
 
   {
@@ -48,13 +48,29 @@ const productsArr = [
   
   
 
-const Resource = () => {
+const Resource = (props) => {
+
+  const cartCtx = useContext(CartContext);
+  const [isItemAdded, setIsItemAdded] = useState(false);
+
+  const addToCartHandler = (product) => {
+    cartCtx.addItem({ ...product, amount: 1 });
+    setIsItemAdded(true);
+  };
+
+  const removeFromCartHandler = (product) => {
+    cartCtx.removeItem(product.title);
+    setIsItemAdded(false);
+  };
+  const isCartOpen=props.isCartOpen;
  
     // Splitting the products into groups of 2 for each column
     const columns = [];
     for (let i = 0; i < productsArr.length; i += 2) {
       columns.push(productsArr.slice(i, i + 2));
     }
+
+    
   
     const elements = (
       <div className={classes['product-columns']}>
@@ -65,6 +81,13 @@ const Resource = () => {
                 <h2>{product.title}</h2>
                 <p>Price: ${product.price}</p>
                 <img src={product.imageUrl} alt={product.title} />
+                <div>
+  {isItemAdded && isCartOpen ? (
+    <button onClick={() => removeFromCartHandler(product)}>Remove from Cart</button>
+  ) : (
+    <button onClick={() => addToCartHandler(product)}>Add to Cart</button>
+  )}
+</div>
               </li>
             ))}
           </ul>
