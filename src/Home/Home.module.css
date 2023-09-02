@@ -1,0 +1,21 @@
+.circle-container {
+    width: 5cm;
+    height: 5cm;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    margin-right: 20px; /* Adjust the margin to control the space between the circle and the text */
+  }
+  
+  /* Define the styles for the image inside the circle container */
+  .circle-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+ 
+  

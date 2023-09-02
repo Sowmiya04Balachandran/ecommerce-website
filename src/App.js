@@ -1,120 +1,73 @@
-// //import logo from './logo.svg';
-// import React, { useState ,useContext} from 'react';
+
+// // // App.js
+// //import {createBrowserRouter ,RouterProvider } from 'react-router-dom';
+// import React, { useState, useContext } from 'react';
 // import CartModal from './components/UI/CartModal';
-// import   './App.css'
-// //import Cart from './components/Cart/Cart'; // Adjust the import path
-// import Resource from './components/Resourse';
+// import './App.css';
+// import Resource from './components/Resource';
 // import CartProvider from './store/CartProvider';
+// import CartButton from './components/Cart/CartButton';
 // import CartContext from './store/CartContext';
+// //import About from './AboutPage/About';
+
+
+// // const router=createBrowserRouter([
+// //   {path:'/aboutUs',element:<About />},
+  
+// // ])
 
 // function App() {
-//   const initialCart = [
-//     {
-//       title: 'Colors',
-//       price: 100,
-//       imageUrl:
-//         'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
-//       quantity: 2,
-//     },
-//     {
-//       title: 'Black and white Colors',
-//       price: 50,
-//       imageUrl:
-//         'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
-//       quantity: 3,
-//     },
-//     {
-//       title: 'Yellow and Black Colors',
-//       price: 70,
-//       imageUrl:
-//         'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
-//       quantity: 1,
-//     },
-//   ];
-
-//   const [cartItems, setCartItems] = useState(initialCart);
 //   const [isCartOpen, setIsCartOpen] = useState(false);
-
-//   const handleRemoveItem = (title) => {
-//     const updatedCart = cartItems.filter((item) => item.title !== title);
-//     setCartItems(updatedCart);
-//   };
+//   const cartCtx = useContext(CartContext);
 
 //   const toggleCart = () => {
 //     setIsCartOpen(!isCartOpen);
 //   };
 
-//   const cartCtx = useContext(CartContext);
-
 //   return (
-    
+//     //<RouterProvider router={router}>
 //     <CartProvider>
-//       <div className='align-right'>
-//       <button onClick={toggleCart}>
-//       Cart <sup>{cartCtx.items.length}</sup>
-//       </button></div>
+//       <div>
+//          <CartButton onClick={toggleCart} /> 
+        
+        
+//       </div>
 //       {isCartOpen && (
-//                 <CartModal
-//                 cartItems={cartItems}
-//                 onRemoveItem={handleRemoveItem}
-//                 onClose={toggleCart}
-//               />
-      
+//         <CartModal
+//           cartItems={cartCtx.items}
+//           onRemoveItem={cartCtx.removeItem}
+//           onClose={toggleCart}
+//         />
 //       )}
 //       <Resource />
 //     </CartProvider>
+//     //</RouterProvider>
 //   );
 // }
 
 // export default App;
 
 
-// App.js
-import { createBrowserRouter,RouterProvider } from 'react-router-dom';
-import React, { useState,useContext } from 'react';
-import CartModal from './components/UI/CartModal';
-import './App.css';
-import Resource from './components/Resource';
-import CartProvider from './store/CartProvider';
-import CartButton from './components/Cart/CartButton'; // Import the CartButton component
-import CartContext from './store/CartContext';
-import About from './AboutPage/About';
+import React from 'react';
+import {createBrowserRouter ,RouterProvider } from 'react-router-dom';
+import Root from './Links/Root';
+import StorePage from './Pages/StorePage';
+import AboutPage from './Pages/AboutPage';
+import HomePage from './Pages/HomePage';
 
+const App=()=>{
 
-
-
-const router=createBrowserRouter([
-  {path:'/aboutUs',element:<About />}
-])
-
-
-function App() {
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const cartCtx=useContext(CartContext);
-
-  const toggleCart = () => {
-    setIsCartOpen(!isCartOpen);
-  };
-  const handleRemoveItem = (itemTitle) => {
-    cartCtx.removeItem(itemTitle); // Call the removeItem function from context
-  };
-
+  const router=createBrowserRouter([
+    {path:'/',element:<Root/>,children:[
+      {path:'/About',element:<AboutPage />},
+       {path:'/Store',element:<StorePage />},
+       {path:'/',element:<HomePage />},
+    ]}
+       
+      
+     ])
   return (
-    <RouterProvider router={router}>
-    <CartProvider>
-      <div className='align-right'>
-        <CartButton onClick={toggleCart} /> {/* Use the CartButton component */}
-      </div>
-      {isCartOpen && (
-        <CartModal
-        cartItems={cartCtx.items}
-        onRemoveItem={handleRemoveItem} // Pass the remove item function
-      />
-      )}
-      <Resource isCartOpen={isCartOpen}/>
-    </CartProvider>
-    </RouterProvider>
-  );
+    <RouterProvider router={router}/>
+  )
 }
-
 export default App;
