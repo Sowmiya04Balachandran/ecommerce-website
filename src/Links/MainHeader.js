@@ -16,6 +16,9 @@ const MainNavigation = () => {
             <NavLink to="/about">About</NavLink>
           </li>
           <li>
+            <NavLink to="/login">Login</NavLink>
+          </li>
+          <li>
             <NavLink to="/contact">Contact Us</NavLink>
           </li>
         </ul>
