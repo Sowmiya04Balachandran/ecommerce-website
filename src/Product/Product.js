@@ -8,7 +8,7 @@ import CartContext from '../store/CartContext';
 
 
 
-const ResourceWithCartButton=()=>{
+const Product=()=>{
   const [isCartOpen, setIsCartOpen] = useState(false);
   const cartCtx = useContext(CartContext);
 
@@ -36,6 +36,6 @@ const ResourceWithCartButton=()=>{
     
   );
 }
-export default ResourceWithCartButton;
+export default Product ;
 
 
