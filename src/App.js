@@ -1,6 +1,6 @@
 
-import React ,{useState} from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import React ,{useContext} from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import MainHeader from './Links/MainHeader';
 import HomePage from './Pages/HomePage';
 import StorePage from './Pages/StorePage';
@@ -8,20 +8,15 @@ import AboutPage from './Pages/AboutPage';
 import ContactPage from './Pages/ContactPage';
 import ProductDetail from './Product/ProductDetail';
 import LoginPage from './Pages/LoginPage';
+import AuthContext from './AuthContext/AuthContext';
 //import Login from './Login/Login';
 
+
 const App = () => {
-  const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
+  const authCtx=useContext(AuthContext);
 
-  const handleLogin=()=>{
-    setUserIsLoggedIn(true);
-  }
-
-  const handleStore=()=>
-  {
-    setUserIsLoggedIn(false);
-  }
- 
+  const isLoggedIn=authCtx.isLoggedIn;
+  
   return (
     <Router>
       <div>
@@ -29,9 +24,9 @@ const App = () => {
         <main>
           <Route path='/' exact><HomePage/></Route>
           <Route path="/home" component={HomePage} exact />
-          <Route path="/store" exact>{userIsLoggedIn ? <StorePage onLogout={handleStore}/> : <Redirect to={'/login'}/>}</Route>
+          {isLoggedIn && <Route path="/store" exact> <StorePage/></Route>}
           <Route path="/about" component={AboutPage} />
-          <Route path="/login"> {userIsLoggedIn ? <Redirect to="/store" /> : <LoginPage onLogin={handleLogin} />}</Route>
+          <Route path="/login">  <LoginPage /> </Route>
           <Route path="/contact" component={ContactPage} />
           <Route path="/product/:productId" component={ProductDetail} /> {/* Dynamic route */}
         </main>
